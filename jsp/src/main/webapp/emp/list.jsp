@@ -13,12 +13,14 @@
 </head>
 <body>
 	<c:forEach items="${list}" var="emp">
-${emp.first_name} ${emp.email} ${emp.salary}
-<fmt:formatDate value="${emp.hire_date}" />
-		<br>
+	사원번호: ${emp.employee_id} 이름: ${emp.first_name}
+	<button type="button">등록</button>
+	<br>
+<%-- <fmt:formatDate value="${emp.hire_date}" /> --%>
+		
 	</c:forEach>
 
-	<my:login />
+<%-- 	<my:login />
 	<my:paging />
 	이름:
 	<%=((ArrayList<EmpVO>) request.getAttribute("list")).get(0).getFirst_name()%>
@@ -30,5 +32,5 @@ ${emp.first_name} ${emp.email} ${emp.salary}
 	<%=request.getHeader("User-Agent")%>
 	<br>
 	<my:login />
-	<my:paging />
+	<my:paging /> --%>
 </html>

@@ -30,10 +30,10 @@ public class JobDAO {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				vo = new JobVO();
-				vo.setJOB_ID(rs.getString("JOB_ID"));
-				vo.setJOB_TITLE(rs.getString("JOB_TITLE"));
-				vo.setMAX_SALARY(rs.getString("MIN_SALARY"));
-				vo.setMIN_SALARY(rs.getString("MAX_SALARY"));
+				vo.setJob_id(rs.getString("JOB_ID"));
+				vo.setJob_title(rs.getString("JOB_TITLE"));
+				vo.setMax_salary(rs.getString("MIN_SALARY"));
+				vo.setMin_salary(rs.getString("MAX_SALARY"));
 				list.add(vo);
 			}
 		} catch (Exception e) {

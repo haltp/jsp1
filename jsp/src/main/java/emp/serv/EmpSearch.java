@@ -34,7 +34,7 @@ public class EmpSearch extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<EmpVO> list = EmpDAO.getInstace().selectList();
+		ArrayList<EmpVO> list = EmpDAO.getInstance().selectList();
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/emp/list.jsp").forward(request, response);
 	}

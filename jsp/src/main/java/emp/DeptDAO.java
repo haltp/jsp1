@@ -13,7 +13,7 @@ public class DeptDAO {
 
 	private static DeptDAO instance;
 
-	public static DeptDAO getInstance() {
+	public static DeptDAO getinstance() {
 		if (instance == null) {
 			instance = new DeptDAO();
 		}
@@ -30,10 +30,9 @@ public class DeptDAO {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				vo = new DeptVO();
-				vo.setDEPARTMENT_ID(rs.getString("DEPARTMENT_ID"));
-				vo.setDEPARTMENT_NAME(rs.getString("DEPARTMENT_NAME"));
-				vo.setMANAGER_ID(rs.getString("MANAGER_ID"));
-				vo.setLOCATION_ID(rs.getString("LOCATION_ID"));
+				vo.setDepartment_id(rs.getString("DEPARTMENT_ID"));
+				vo.setDepartment_name(rs.getString("DEPARTMENT_NAME"));
+			
 				list.add(vo);
 			}
 		} catch (Exception e) {

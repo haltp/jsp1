@@ -28,13 +28,13 @@ public class EmpUpdate extends HttpServlet {
 	//수정페이지 이동
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<JobVO> jobList = JobDAO.getInstance().selectList();
-		List<DeptVO> deptList = DeptDAO.getInstance().selectList();
+		List<DeptVO> deptList = DeptDAO.getinstance().selectList();
 		request.setAttribute("jobList", jobList);
 		request.setAttribute("deptList", deptList);
 		
 		//수정할 사원정보를 단건조회
 		String empid = request.getParameter("employee_id");
-		EmpVO empVO = EmpDAO.getInstace().selectOne(empid);
+		EmpVO empVO = EmpDAO.getInstance().selectOne(empid);
 		request.setAttribute("empVO", empVO);		
 		request.getRequestDispatcher("/emp/empInsert.jsp").forward(request, response);
 	}

@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 
@@ -20,7 +19,7 @@ public class EmpDAO {
 	// singletone
 	private static EmpDAO instance;
 
-	public static EmpDAO getInstace() {
+	public static EmpDAO getInstance() {
 		if (instance == null) {
 			instance = new EmpDAO();
 		}
@@ -33,11 +32,18 @@ public class EmpDAO {
 		EmpVO vo = null;
 		try {
 			conn = JdbcUtil.connect();
-			String sql = "SELECT EMPLOYEE_ID, " + "FIRST_NAME, " + "LAST_NAME, " + "EMAIL, " + "PHONE_NUMBER, "
-					//+ "to_char(HIRE_DATE, 'yyyy-MM') hire_date, "
-					+ "HIRE_DATE, "
-					+ "JOB_ID, " + "SALARY, " + "COMMISSION_PCT, " + "MANAGER_ID, "
-					+ "DEPARTMENT_ID FROM EMPLOYEES ORDER BY EMPLOYEE_ID";
+			String sql = "SELECT EMPLOYEE_ID, " 
+					   + "FIRST_NAME, " 
+					   + "LAST_NAME, " 
+					   + "EMAIL, " 
+					   + "PHONE_NUMBER, "
+					 //+ "to_char(HIRE_DATE, 'yyyy-MM') hire_date, "
+					   + "HIRE_DATE, "
+					   + "JOB_ID, " 
+					   + "SALARY, " 
+					   + "COMMISSION_PCT, " 
+					   + "MANAGER_ID, "
+					   + "DEPARTMENT_ID FROM EMPLOYEES ORDER BY EMPLOYEE_ID";
 			pstmt = conn.prepareStatement(sql);
 
 			rs = pstmt.executeQuery();
@@ -51,6 +57,8 @@ public class EmpDAO {
 				vo.setHire_date(rs.getDate("HIRE_DATE"));
 				vo.setJob_id(rs.getString("JOB_ID"));
 				vo.setSalary(rs.getString("SALARY"));
+				vo.setManager_id(rs.getString("MANAGER_ID"));
+				vo.setDepartment_id(rs.getString("DEPARTMENT_ID"));
 				list.add(vo);
 			}
 		} catch (Exception e) {
@@ -66,9 +74,17 @@ public class EmpDAO {
 		EmpVO vo = null;
 		try {
 			conn = JdbcUtil.connect();
-			String sql = "SELECT EMPLOYEE_ID, " + "FIRST_NAME, " + "LAST_NAME, " + "EMAIL, " + "PHONE_NUMBER, "
-					+ "HIRE_DATE, " + "JOB_ID, " + "SALARY, " + "COMMISSION_PCT, " + "MANAGER_ID, "
-					+ "DEPARTMENT_ID FROM EMPLOYEES WHERE EMPLOYEE_ID=?";
+			String sql = "SELECT EMPLOYEE_ID, " 
+					   + "FIRST_NAME, " 
+					   + "LAST_NAME, " 
+					   + "EMAIL, " 
+					   + "PHONE_NUMBER, "
+					   + "HIRE_DATE, "
+					   + "JOB_ID, " 
+					   + "SALARY, " 
+					   + "COMMISSION_PCT, " 
+					   + "MANAGER_ID, "
+					   + "DEPARTMENT_ID FROM EMPLOYEES WHERE EMPLOYEE_ID=?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, id);
@@ -81,6 +97,10 @@ public class EmpDAO {
 				vo.setLast_name(rs.getString("LAST_NAME"));
 				vo.setEmail(rs.getString("EMAIL"));
 				vo.setPhone_number(rs.getString("PHONE_NUMBER"));
+				vo.setHire_date(rs.getDate("HIRE_DATE"));
+				vo.setManager_id(rs.getString("MANAGER_ID"));
+				vo.setDepartment_id(rs.getString("DEPARTMENT_ID"));
+				vo.setJob_id(rs.getString("JOB_ID"));
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -91,15 +111,15 @@ public class EmpDAO {
 	}
 	
 	//이메일 조회
-	public EmpVO selectOneByEmail(String id) {
+	public EmpVO selectOneByEmail(String EMAIL) {
 		EmpVO vo = null;
 		try {
 			conn = JdbcUtil.connect();
-			String sql = "SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, "
-					+ "FROM EMPLOYEES WHERE EMPLOYEE_ID=?";
+			String sql = "SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER "
+					+ "FROM EMPLOYEES WHERE EMAIL=?";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, id);
+			pstmt.setString(1, EMAIL);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				vo = new EmpVO();
@@ -122,16 +142,17 @@ public class EmpDAO {
 			// 1. connect(연결)
 			conn = JdbcUtil.connect();
 			// 2. statement (구문)
-			String sql = "INSERT INTO EMPLOYEES (EMPLOYEE_ID, " + " LAST_NAME, " + " EMAIL, " + " HIRE_DATE, "
-					+ " JOB_ID) " + " VALUES(?,?,?,?,?)";
+			String sql = "INSERT INTO EMPLOYEES (EMPLOYEE_ID, " + " MANAGER_ID, " + " LAST_NAME, " + " EMAIL, " + " HIRE_DATE, "
+					+ " JOB_ID) " + " VALUES(?,?,?,?,?,?)";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 
 			// 3. execute(실행)
 			pstmt.setString(1, vo.getEmployee_id());
-			pstmt.setString(2, vo.getLast_name());
-			pstmt.setString(3, vo.getEmail());
-			pstmt.setDate(4, vo.getHire_date());
-			pstmt.setString(5, vo.getJob_id());
+			pstmt.setString(2, vo.getManager_id());
+			pstmt.setString(3, vo.getLast_name());
+			pstmt.setString(4, vo.getEmail());
+			pstmt.setDate(5, vo.getHire_date());
+			pstmt.setString(6, vo.getJob_id());
 
 			int r = pstmt.executeUpdate();
 			System.out.println(r + "건이 등록됨");

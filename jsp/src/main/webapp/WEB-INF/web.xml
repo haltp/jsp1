@@ -8,7 +8,7 @@
   	<servlet-name>EmpList</servlet-name>
   	<display-name>EmpList</display-name>
   	<description></description>
-  	<servlet-class>emp.EmpList</servlet-class>
+  	<servlet-class>emp.serv.EmpList</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>EmpInsert</servlet-name>
